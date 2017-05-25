@@ -3,6 +3,7 @@ package com.example.weather;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,22 +23,14 @@ import java.io.InputStream;
 public class Weather {
 
     private static final String URL =
-            "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric&appid=ea132beb7225d8f39b6516bfa0ce4ab3";
+            " http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&q=%s&units=metric&appid=ea132beb7225d8f39b6516bfa0ce4ab3";
 
-    //private static final String KEY = "ea132beb7225d8f39b6516bfa0ce4ab3";
+    private static String forecastDaysNum = "7";
 
-    public static String setWeatherIcon(int actualId, long sunrise, long sunset){
+    public static String setWeatherIcon(int actualId){
         System.out.println("set weather icon");
         int id = actualId / 100;
         String icon = "";
-        if(actualId == 800){
-            long currentTime = new Date().getTime();
-            if(currentTime>=sunrise && currentTime<sunset) {
-                icon = "&#xf00d;";
-            } else {
-                icon = "&#xf02e;";
-            }
-        } else {
             switch(id) {
                 case 2 : icon = "&#xf01e;";
                     break;
@@ -51,13 +44,16 @@ public class Weather {
                     break;
                 case 5 : icon = "&#xf019;";
                     break;
-            }
         }
         return icon;
     }
 
     public interface AsyncResponse {
-        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8);
+        void processFinish(String output1, String output2, String output3, String output4, String output5,
+                String output6, String output7, String output8, String output9, String output10,
+                           String output11, String output12, String output13, String output14,
+                           String output15, String output16, String output17, String output18,
+                           String output19, String output20, String output21, String output22);
     }
 
     public static class placeIdTask extends AsyncTask<String, Void, JSONObject> {
@@ -65,18 +61,15 @@ public class Weather {
         public AsyncResponse delegate = null;
 
         public placeIdTask(AsyncResponse asyncResponse) {
-            System.out.println("place ID Task");
             delegate = asyncResponse;
         }
 
         @Override
         protected JSONObject doInBackground(String... params) {
 
-            System.out.println("Do in background");
-
             JSONObject jsonWeather = null;
             try {
-                jsonWeather = getWeatherJSON(params[0], params[1]);
+                jsonWeather = getWeatherJSON(params[0],forecastDaysNum);
             } catch (Exception e) {
                 Log.d("Error", "Cannot process JSON results", e);
             }
@@ -87,35 +80,49 @@ public class Weather {
         @Override
         protected void onPostExecute(JSONObject json) {
             try {
-                System.out.println("on post execute");
 
                 if(json != null){
-                    JSONObject details = json.getJSONArray("weather").getJSONObject(0);
-                    JSONObject main = json.getJSONObject("main");
-                    DateFormat df = DateFormat.getDateTimeInstance();
+                    JSONArray jlist = (JSONArray) json.get("list");
+                    int length = jlist.length();
+                    String city = "";
+
+                    String minTemperature[] = new String[length];
+                    String maxTemperature[] = new String[length];
+                    String iconText[] = new String[length];
+
+                    for (int i = 0; i < length; i++){
+
+                        JSONObject jsonObject = jlist.getJSONObject(i);
+
+                        JSONObject weather = jsonObject.getJSONArray("weather").getJSONObject(0);
+
+                        DateFormat df = DateFormat.getDateTimeInstance();
+
+                        city = json.getJSONObject("city").getString("name");
+
+                        minTemperature[i] = String.format("%.2f", jsonObject.getJSONObject("temp").getDouble("min"))+ "°";
+                        maxTemperature[i] = String.format("%.2f", jsonObject.getJSONObject("temp").getDouble("max"))+ "°";
+
+                        iconText[i] = setWeatherIcon(weather.getInt("id"));
 
 
-                    String city = json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country");
-
-                    String description = details.getString("description").toUpperCase(Locale.US);
-                    String temperature = String.format("%.2f", main.getDouble("temp"))+ "°";
-                    String humidity = main.getString("humidity") + "%";
-                    String pressure = main.getString("pressure") + " hPa";
-                    String updatedOn = df.format(new Date(json.getLong("dt")*1000));
-                    String iconText = setWeatherIcon(details.getInt("id"),
-                            json.getJSONObject("sys").getLong("sunrise") * 1000,
-                            json.getJSONObject("sys").getLong("sunset") * 1000);
-
+                    }
                     System.out.println(city);
-                    System.out.println(description);
-                    System.out.println(temperature);
-                    System.out.println(humidity);
-                    System.out.println(pressure);
-                    System.out.println(updatedOn);
-                    System.out.println(iconText);
+                    for(int j=0; j<length;j++){
+                        System.out.println(minTemperature[j]);
+                        System.out.println(maxTemperature[j]);
+                        System.out.println(iconText[j]);
+                    }
 
-                    delegate.processFinish(city, description, temperature, humidity, pressure, updatedOn, iconText, ""+ (json.getJSONObject("sys").getLong("sunrise") * 1000));
-
+                    delegate.processFinish(city, minTemperature[0], maxTemperature[0],
+                            minTemperature[1], maxTemperature[1],
+                            minTemperature[2], maxTemperature[2],
+                            minTemperature[3], maxTemperature[3],
+                            minTemperature[4], maxTemperature[4],
+                            minTemperature[5], maxTemperature[5],
+                            minTemperature[6], maxTemperature[6],
+                            iconText[0], iconText[1], iconText[2], iconText[3],
+                            iconText[4], iconText[5], iconText[6]);
                 }
 
                 else
@@ -124,17 +131,13 @@ public class Weather {
             } catch (JSONException e) {
                System.out.println("Cannot process JSON results");
             }
-
-
-
         }
     }
 
-    public static JSONObject getWeatherJSON(String lat, String lon){
+    public static JSONObject getWeatherJSON(String city, String ForecastDayNum){
         try {
-            System.out.println("get weather json");
-            URL url = new URL(String.format(URL, lat, lon));
-            System.out.println(String.format(URL, lat, lon));
+            URL url = new URL(String.format(URL, city));
+
             HttpURLConnection connection = null;
 
             try {
@@ -147,21 +150,10 @@ public class Weather {
             int responseCode = connection.getResponseCode();
             String responseMessage = connection.getResponseMessage();
 
-            /*InputStream is = null;
-            if (responseCode >= 400) {
-                is = connection.getErrorStream();
-            } else {
-                is = connection.getInputStream();
-            }*/
-
             String resp = responseCode + "\n" + responseMessage + "\n>";
             System.out.println(resp);
 
             System.out.println("connection "+connection);
-            System.out.println(connection.getInputStream());
-
-            System.out.println("reader");
-            //connection.addRequestProperty("x-api-key", KEY);
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()));
@@ -175,10 +167,6 @@ public class Weather {
             reader.close();
 
             JSONObject data = new JSONObject(json.toString());
-
-            if(data.getInt("cod") != 200){
-                return null;
-            }
 
             return data;
         }catch(Exception e){

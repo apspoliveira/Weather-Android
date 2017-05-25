@@ -1,77 +1,247 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.weather.MainActivity">
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/city_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:gravity="center"
+        android:textSize="25dp"/>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:text="Conditions"
+            android:textSize="12dp"/>
+
+        <TextView
+            android:text="Temperature(min)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="12dp"/>
+
+        <TextView
+            android:text="Temperature(max)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="12dp"/>
+
+    </TableRow>
+
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/weather_icon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:textSize="35dp"
+            />
+
+        <TextView
+            android:id="@+id/minTemperature_field1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/maxTemperature_field1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="20dp"
+            />
+
+    </TableRow>
+
+
+    <TableRow android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
     <TextView
-        android:id="@+id/updated_field"
+        android:id="@+id/weather_icon2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/city_field"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/weather_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="90sp"
+        android:layout_column="1"
+        android:textSize="35dp"
         />
 
-    <TextView
-        android:id="@+id/current_temperature_field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="50sp" />
+        <TextView
+            android:id="@+id/minTemperature_field2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/maxTemperature_field2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="20dp"
+            />
+
+</TableRow>
+
+    <TableRow android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <TextView
-        android:id="@+id/details_field"
+        android:id="@+id/weather_icon3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/weather_icon"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
-    <TextView
-        android:id="@+id/humidity_field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/details_field"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
-    <TextView
-        android:id="@+id/pressure_field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/humidity_field"
-        android:layout_centerHorizontal="true"
-        android:textColor="#FFFFFF"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_column="1"
+        android:textSize="35dp"
         />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/minTemperature_field3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/maxTemperature_field3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="20dp"
+            />
+
+</TableRow>
+
+    <TableRow android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/weather_icon4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:textSize="35dp"
+            />
+
+        <TextView
+            android:id="@+id/minTemperature_field4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/maxTemperature_field4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="20dp"
+            />
+
+    </TableRow>
+
+
+    <TableRow android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/weather_icon5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:textSize="35dp"
+            />
+
+        <TextView
+            android:id="@+id/minTemperature_field5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/maxTemperature_field5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="20dp"
+            />
+
+    </TableRow>
+
+    <TableRow android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/weather_icon6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:textSize="35dp"
+            />
+
+        <TextView
+            android:id="@+id/minTemperature_field6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/maxTemperature_field6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="20dp"
+            />
+
+    </TableRow>
+
+    <TableRow android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/weather_icon7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:textSize="35dp"
+            />
+
+        <TextView
+            android:id="@+id/minTemperature_field7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/maxTemperature_field7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:textSize="20dp"
+            />
+
+    </TableRow>
+</TableLayout>
